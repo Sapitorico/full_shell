@@ -1,6 +1,8 @@
 #include "main.h"
 int argument_counter(char *input);
 
+char **command = NULL;
+
 int main(void)
 {
 	char *input = NULL;
@@ -18,12 +20,12 @@ int main(void)
 int argument_counter(char *copy_input)
 {
 	int counter = 0;
-
-	strtok(copy_input, " \n");
-	while (copy_input)
+	char *tok = strtok(copy_input, " \t\n");
+	while (tok)
 	{
-		strtok(copy_input, NULL);
 		counter++;
+		tok = strtok(NULL, " \t\n");
 	}
-	
+	free(copy_input);
+	return counter;
 }
