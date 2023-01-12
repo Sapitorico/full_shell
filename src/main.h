@@ -5,4 +5,10 @@
 #include <string.h>
 #include <unistd.h>
 #define DELIM " \t\n"
+int pathmaker();
+int not_found();
+
+extern char **tokenize_input;
+extern char *input;
+
 #endif

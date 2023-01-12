@@ -2,6 +2,7 @@
 int argument_counter(char *input);
 void tokenize(int counter);
 void free_tokens();
+int print_prompt(int isat);
 
 char *input = NULL;
 char **tokenize_input = NULL;
@@ -9,15 +10,14 @@ char **tokenize_input = NULL;
 int main(void)
 {
 	size_t size_input = 0;
-	int isat = isatty(STDIN_FILENO);
 	int counter = 0;
+	int isat = isatty(STDIN_FILENO);
 	
-	isat && write(1, "$ ", 2);
-	while (getline(&input, &size_input, stdin) >= 0)
+	while (print_prompt(isat) && getline(&input, &size_input, stdin) >= 0)
 	{
-		isat && write(1, "$ ", 2);
 		if ((counter = argument_counter(strdup(input))) == 0) continue;
 		tokenize(counter);
+		pathmaker() && not_found();
 		free_tokens();
 	}
 	if (input) free(input);
@@ -54,4 +54,11 @@ void free_tokens()
 {
 	if (!tokenize_input) return;
 	free(tokenize_input);
+}
+
+
+int print_prompt(int isat)
+{
+	isat && write(1, "$ ", 2);
+	return 1;
 }
