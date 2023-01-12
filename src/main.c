@@ -19,7 +19,7 @@ int argument_counter(char *copy_input)
 {
 	int counter = 0;
 
-	copy_input = strtok(input, " \n");
+	strtok(copy_input, " \n");
 	while (copy_input)
 	{
 		strtok(copy_input, NULL);
