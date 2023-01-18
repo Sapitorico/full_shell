@@ -6,22 +6,25 @@ int print_prompt(int isat);
 
 char *input = NULL;
 char **tokenize_input = NULL;
+char *concat1 = NULL;
 
 int main(void)
 {
 	size_t size_input = 0;
 	int counter = 0;
 	int isat = isatty(STDIN_FILENO);
+	int exit_status = 0;
 	
 	while (print_prompt(isat) && getline(&input, &size_input, stdin) >= 0)
 	{
 		if ((counter = argument_counter(strdup(input))) == 0) continue;
 		tokenize(counter);
-		pathmaker() && not_found();
+		!(concat1 = path_maker(tokenize_input[0])) && (exit_status = not_found());
+		free(concat1);
 		free_tokens();
 	}
 	if (input) free(input);
-	return (0);
+	return (exit_status);
 }
 int argument_counter(char *copy_input)
 {
@@ -48,14 +51,12 @@ void tokenize(int counter)
 		token = strtok(NULL, DELIM);
 		i++;
 	}
-	tokenize_input[i] = NULL;
 }
 void free_tokens()
 {
 	if (!tokenize_input) return;
 	free(tokenize_input);
 }
-
 
 int print_prompt(int isat)
 {

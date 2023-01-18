@@ -4,9 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <sys/stat.h>
 #define DELIM " \t\n"
-int pathmaker();
+char *path_maker();
 int not_found();
+int str_cat();
 
 extern char **tokenize_input;
 extern char *input;
